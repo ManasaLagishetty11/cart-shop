@@ -8,6 +8,7 @@ import com.evoke.cartshop.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -19,13 +20,17 @@ public class AddressService {
     @Autowired
     private UserRepository userRepository;
 
-    public Address saveAddress(Address address,Long userId) {
+    public Address saveAddress(Address address, Long userId) {
         Optional<User> user = userRepository.findById(userId);
-        if(!user.isPresent()){
-            throw new ResourceNotFoundException("User not found "+ user.get().getEmail());
+        if (!user.isPresent()) {
+            throw new ResourceNotFoundException("User not found " + user.get().getEmail());
         }
         address.setUser(user.get());
         return addressRepository.save(address);
+    }
+
+    public List<Address> getAllSavedAddressOfUser(Long userId) {
+        return addressRepository.findAllByUserId(userId);
     }
 }
 

@@ -5,6 +5,8 @@ import com.evoke.cartshop.models.Address;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.List;
+
 
 @Mapper(componentModel = "spring")
 public interface AddressMapper {
@@ -13,4 +15,6 @@ public interface AddressMapper {
 
     @Mapping(target = "user.address", ignore = true)
     AddressDto toDto(Address address);
+
+    List<AddressDto> toDto(List<Address> addressList);
 }

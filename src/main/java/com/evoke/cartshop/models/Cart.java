@@ -30,4 +30,6 @@ public class Cart {
     @Column(name="total_value_of_items")
     private double totalValueOfItems;
 
+    @Column(name="is_visible")
+    private boolean isVisible = true;
 }

@@ -16,4 +16,5 @@ public class CartDto {
 
     private double totalValueOfItems;
 
+    private boolean isVisible;
 }

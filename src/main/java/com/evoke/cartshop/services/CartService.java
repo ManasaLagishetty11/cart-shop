@@ -61,7 +61,7 @@ public class CartService {
 
 
     public CartItemsAndTotalCartValueDto getCartItems(Long userId) {
-        List<Cart> cartList = cartRepository.findCartByUserId(userId);
+        List<Cart> cartList = cartRepository.findCartByUserIdAndIsVisibleIsTrue(userId);
         CartItemsAndTotalCartValueDto cartItemsAndTotalValue = new CartItemsAndTotalCartValueDto();
         cartItemsAndTotalValue.setCartDtoList(cartMapper.toDto(cartList));
         cartItemsAndTotalValue.setTotalCartValue(calculateTotalCartValue(cartList));
@@ -85,9 +85,8 @@ public class CartService {
     }
 
     private double setValueOfItems(Item item) {
-        boolean isDiscountAvailable = item.getDiscount().isDiscountAvailable();
-        double itemPrice = item.getPrice();
-        if (isDiscountAvailable)
+       double itemPrice = item.getPrice();
+        if (item.getDiscount()!= null)
             return calculateDiscountPrice(discountRepository.findDiscountByItemId(item.getId()), itemPrice);
         else
             return item.getPrice();
@@ -100,7 +99,18 @@ public class CartService {
     }
 
     private void updateNumberOfItems(Item item, int numberOfItems) {
+        if(numberOfItems > item.getNumberOfItems()){
+         throw new ResourceNotFoundException("Items not available");
+        }
         item.setNumberOfItems(item.getNumberOfItems() - numberOfItems);
         itemRepository.save(item);
+    }
+
+    public void removeCartItemsAfterOrderConfirmation(List<Long> idList) {
+        for(Long id:idList){
+           Optional<Cart> cart= cartRepository.findById(id);
+           cart.get().setVisible(false);
+           cartRepository.save(cart.get());
+        }
     }
 }

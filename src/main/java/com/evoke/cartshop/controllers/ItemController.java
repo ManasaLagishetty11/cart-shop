@@ -2,7 +2,6 @@ package com.evoke.cartshop.controllers;
 
 import com.evoke.cartshop.dto.ItemDto;
 import com.evoke.cartshop.mappers.ItemMapper;
-import com.evoke.cartshop.models.Item;
 import com.evoke.cartshop.services.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,6 +36,11 @@ public class ItemController {
         return ResponseEntity.ok(mapper.toDto(itemService.getItems()));
     }
 
+    @PatchMapping("/items/{id}/{price}")
+    public ResponseEntity<ItemDto> updatePrice(@PathVariable long id,@PathVariable double price) {
+        return ResponseEntity.ok(mapper.toDto(itemService.updatePrice(id,price)));
+
+    }
 
     @DeleteMapping("/items/{id}")
     public void deleteMapping(@PathVariable Long id) {
