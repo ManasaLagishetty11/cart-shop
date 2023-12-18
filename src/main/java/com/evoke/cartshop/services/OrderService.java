@@ -62,8 +62,15 @@ public class OrderService {
     }
 
     public Order cancelOrder(Long id) {
-        Optional<Order> order=orderRepository.findById(id);
+        Optional<Order> order = orderRepository.findById(id);
         order.get().setOrderStatus(OrderStatus.CANCELLED);
         return orderRepository.save(order.get());
+    }
+
+    public List<Order> findOrders(Long userId, OrderStatus orderStatus) {
+        if (orderStatus == null)
+            return orderRepository.findAllOrderByUserId(userId);
+        else
+            return orderRepository.findAllOrderByUserIdAndOrderStatus(userId,orderStatus);
     }
 }
