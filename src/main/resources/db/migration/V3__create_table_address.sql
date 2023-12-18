@@ -1,0 +1,8 @@
+CREATE TABLE address(
+id INT PRIMARY KEY IDENTITY,
+area VARCHAR(50),
+city VARCHAR(50),
+country VARCHAR(45),
+zipcode VARCHAR(45),
+user_id INT NOT NULL FOREIGN KEY REFERENCES my_user(id),
+);
