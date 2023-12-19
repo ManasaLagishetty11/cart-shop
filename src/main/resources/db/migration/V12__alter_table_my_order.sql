@@ -1,0 +1,1 @@
+ALTER TABLE my_order add address_id INT

@@ -52,6 +52,7 @@ public class CartService {
             cart.setItem(itemMapper.toDto(item.get()));
             cart.setUser(userMapper.toDto(user.get()));
             cart.setNumberOfItems(1);
+            cart.setVisible(true);
             cart.setTotalValueOfItems(setValueOfItems(item.get()));
             updateNumberOfItems(item.get(), 1);
             return cartRepository.save(cartMapper.toEntity(cart));

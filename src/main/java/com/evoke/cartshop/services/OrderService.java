@@ -2,11 +2,9 @@ package com.evoke.cartshop.services;
 
 
 import com.evoke.cartshop.exceptions.ResourceNotFoundException;
-import com.evoke.cartshop.models.Cart;
+import com.evoke.cartshop.models.*;
+import com.evoke.cartshop.repositories.AddressRepository;
 import com.evoke.cartshop.repositories.UserRepository;
-import com.evoke.cartshop.models.Order;
-import com.evoke.cartshop.models.OrderStatus;
-import com.evoke.cartshop.models.User;
 import com.evoke.cartshop.repositories.CartRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,13 +30,18 @@ public class OrderService {
     @Autowired
     private CartService cartService;
 
-    public Order createOrder(Long userId) {
+    @Autowired
+    private AddressRepository addressRepository;
+
+    public Order createOrder(Long userId,Long addressId) {
         List<Cart> cartList = cartRepository.findCartByUserIdAndIsVisibleIsTrue(userId);
         Optional<User> user = userRepository.findById(userId);
+        Optional<Address> address=addressRepository.findById(addressId);
         Order order = new Order();
         order.setUser(user.get());
         order.setOrderStatus(OrderStatus.RECEIVED);
         order.setCart(cartList);
+        order.setAddress(address.get());
         return orderRepository.save(order);
     }
 

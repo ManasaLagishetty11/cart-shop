@@ -31,6 +31,10 @@ public class Order {
     @OneToMany
     private List<Cart> cart;
 
+    @OneToOne
+    @JoinColumn(name="address_id")
+    private Address address;
+
 }
 
 

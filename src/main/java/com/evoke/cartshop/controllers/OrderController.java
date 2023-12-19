@@ -21,16 +21,14 @@ public class OrderController {
     @Autowired
     private OrderMapper orderMapper;
 
-    @PostMapping("/orders/{userId}")
-    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(orderMapper.toDto(orderService.createOrder(userId)));
-        //address id
+    @PostMapping("/orders/{userId}/address/{addressId}")
+    public ResponseEntity<OrderDto> createOrder(@PathVariable Long userId, @PathVariable Long addressId) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(orderMapper.toDto(orderService.createOrder(userId, addressId)));
     }
 
     @PatchMapping("/orders/{id}/confirm")
     public ResponseEntity<OrderDto> updateOrder(@PathVariable Long id) {
         return ResponseEntity.ok(orderMapper.toDto(orderService.updateOrder(id)));
-//admin
     }
 
     @PatchMapping("/orders/{id}/cancel")

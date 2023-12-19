@@ -12,6 +12,7 @@ import java.util.List;
 public class OrderDto {
     private Long id;
     private OrderStatus orderStatus;
-    private User user;
+    private UserDto user;
     private List<CartDto> cart;
+    private AddressDto address;
 }
