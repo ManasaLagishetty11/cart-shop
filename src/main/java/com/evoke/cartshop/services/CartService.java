@@ -47,17 +47,21 @@ public class CartService {
     public Cart addItemToCart(Long userId, Long itemId) {
         Optional<User> user = userRepository.findById(userId);
         Optional<Item> item = itemRepository.findById(itemId);
-        if (item.get().getNumberOfItems() > 0) {
-            CartDto cart = new CartDto();
-            cart.setItem(itemMapper.toDto(item.get()));
-            cart.setUser(userMapper.toDto(user.get()));
-            cart.setNumberOfItems(1);
-            cart.setVisible(true);
-            cart.setTotalValueOfItems(setValueOfItems(item.get()));
-            updateNumberOfItems(item.get(), 1);
-            return cartRepository.save(cartMapper.toEntity(cart));
-        } else
-            throw new ResourceNotFoundException("item not available");//custom exception for item not available
+        if (user.isPresent() && item.isPresent()) {
+            if (item.get().getNumberOfItems() > 0) {
+                Cart cart = new Cart();
+                cart.setItem(item.get());
+                cart.setUser(user.get());
+                cart.setNumberOfItems(1);
+                cart.setVisible(true);
+                cart.setTotalValueOfItems(setValueOfItems(item.get()));
+                updateNumberOfItems(item.get(), 1);
+                return cartRepository.save(cart);
+            } else
+                throw new ResourceNotFoundException("item not available");
+        } else {
+            throw new ResourceNotFoundException("user or item not present");
+        }
     }
 
 
@@ -86,8 +90,8 @@ public class CartService {
     }
 
     private double setValueOfItems(Item item) {
-       double itemPrice = item.getPrice();
-        if (item.getDiscount()!= null)
+        double itemPrice = item.getPrice();
+        if (item.getDiscount() != null)
             return calculateDiscountPrice(discountRepository.findDiscountByItemId(item.getId()), itemPrice);
         else
             return item.getPrice();
@@ -95,23 +99,22 @@ public class CartService {
 
     private double calculateDiscountPrice(Discount discount, double itemPrice) {
         double discountPrice = (discount.getDiscountPercentage() / 100) * itemPrice;
-        double offerPrice = itemPrice - discountPrice;
-        return offerPrice;
+        return itemPrice - discountPrice;
     }
 
     private void updateNumberOfItems(Item item, int numberOfItems) {
-        if(numberOfItems > item.getNumberOfItems()){
-         throw new ResourceNotFoundException("Items not available");
+        if (numberOfItems > item.getNumberOfItems()) {
+            throw new ResourceNotFoundException("Items not available");
         }
         item.setNumberOfItems(item.getNumberOfItems() - numberOfItems);
         itemRepository.save(item);
     }
 
     public void removeCartItemsAfterOrderConfirmation(List<Long> idList) {
-        for(Long id:idList){
-           Optional<Cart> cart= cartRepository.findById(id);
-           cart.get().setVisible(false);
-           cartRepository.save(cart.get());
+        for (Long id : idList) {
+            Optional<Cart> cart = cartRepository.findById(id);
+            cart.get().setVisible(false);
+            cartRepository.save(cart.get());
         }
     }
 }

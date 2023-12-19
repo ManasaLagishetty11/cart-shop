@@ -35,10 +35,10 @@ public class ItemService {
         itemRepository.deleteById(id);
     }
 
-    public Item updatePrice(long id, double price) {
+    public Item updatePrice(Long id, Double price) {
         Optional<Item> item = itemRepository.findById(id);
         if (!item.isPresent()) {
-            throw new ResourceNotFoundException("Item not Found" + item.get().getId());
+            throw new ResourceNotFoundException("Item not Found" +id);
         }
         item.get().setPrice(price);
         return itemRepository.save(item.get());

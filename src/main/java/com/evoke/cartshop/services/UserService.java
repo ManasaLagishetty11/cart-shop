@@ -39,7 +39,7 @@ public class UserService {
     public User findByEmail(String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if (!user.isPresent())
-            throw new ResourceNotFoundException("User not Found" + user.get().getEmail());
+            throw new ResourceNotFoundException("User not Found" + email);
         else
             return user.get();
     }
@@ -47,7 +47,7 @@ public class UserService {
     public User getUser(Long id) {
         Optional<User> user = userRepository.findById(id);
         if (!user.isPresent())
-            throw new ResourceNotFoundException("User not Found" + user.get().getId());
+            throw new ResourceNotFoundException("User not Found" +id);
         else
             return user.get();
     }

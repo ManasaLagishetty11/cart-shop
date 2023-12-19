@@ -23,7 +23,7 @@ public class AddressService {
     public Address saveAddress(Address address, Long userId) {
         Optional<User> user = userRepository.findById(userId);
         if (!user.isPresent()) {
-            throw new ResourceNotFoundException("User not found " + user.get().getEmail());
+            throw new ResourceNotFoundException("User not found " + userId);
         }
         address.setUser(user.get());
         return addressRepository.save(address);

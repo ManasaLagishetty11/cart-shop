@@ -48,7 +48,7 @@ public class OrderService {
     public Order updateOrder(Long id) {
         Optional<Order> order = orderRepository.findById(id);
         if (!order.isPresent()) {
-            throw new ResourceNotFoundException("order not available");
+            throw new ResourceNotFoundException("order not available"+id);
         }
         order.get().setOrderStatus(OrderStatus.CONFIRMED);
         getCartOfUser(id);

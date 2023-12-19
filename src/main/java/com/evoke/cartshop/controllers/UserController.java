@@ -45,6 +45,7 @@ public class UserController {
         return ResponseEntity.ok().headers(responseHeaders).body(mapper.toDto(user));
     }
 
+
 //    @GetMapping("/users")
 //    public User getDetailsFromContext() {
 //        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
