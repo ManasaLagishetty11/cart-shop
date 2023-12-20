@@ -33,6 +33,9 @@ public class OrderService {
     @Autowired
     private AddressRepository addressRepository;
 
+    @Autowired
+    private EmailService emailService;
+
     public Order createOrder(Long userId,Long addressId) {
         List<Cart> cartList = cartRepository.findCartByUserIdAndIsVisibleIsTrue(userId);
         Optional<User> user = userRepository.findById(userId);
@@ -52,6 +55,7 @@ public class OrderService {
         }
         order.get().setOrderStatus(OrderStatus.CONFIRMED);
         getCartOfUser(id);
+        emailService.sendMailtoUserAfterOrderConformation(order.get().getUser());
         return orderRepository.save(order.get());
     }
 

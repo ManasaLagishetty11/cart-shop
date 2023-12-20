@@ -23,6 +23,9 @@ public class UserService {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private  EmailService emailService;
+
 
     public User createUser(User user) {
         Optional<User> userExist = userRepository.findByEmail(user.getEmail());
@@ -33,6 +36,7 @@ public class UserService {
         user.setPassword(encryptedPwd);
         // user.setRoles(Arrays.asList((new Role(RoleEnum.CUSTOMER)),(new Role(RoleEnum.ADMIN))));
         user.setRoles(Arrays.asList(new Role(RoleEnum.ADMIN)));
+        emailService.sendMailtoUserForSuccessfulRegistration(user);
         return userRepository.save(user);
     }
 
