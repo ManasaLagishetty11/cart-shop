@@ -16,10 +16,10 @@ import org.springframework.mail.javamail.JavaMailSender;
 @Configuration
 public class AwsSesConfig {
 
-    @Value("${cloud.aws.credentials.access-key}")
-    private String accessKey;
-    @Value("${cloud.aws.credentials.secret-key}")
-    private String secretKey;
+   // @Value("${cloud.aws.credentials.access-key}")
+    private String accessKey = System.getProperty("cloud.aws.credentials.access-key");
+   // @Value("${cloud.aws.credentials.secret-key}")
+    private String secretKey = System.getProperty("cloud.aws.credentials.secret-key");
     @Value("${cloud.aws.region.static}")
     private String region;
 
@@ -36,8 +36,4 @@ public class AwsSesConfig {
         return new SimpleEmailServiceMailSender(amazonSimpleEmailService);
     }
 
-    @Bean
-    public JavaMailSender javaMailSender(AmazonSimpleEmailService amazonSimpleEmailService) {
-        return new SimpleEmailServiceJavaMailSender(amazonSimpleEmailService);
-    }
 }
