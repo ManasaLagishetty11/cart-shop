@@ -12,11 +12,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class AwsS3Config {
-    private String accessKey = System.getProperty("cloud.aws.credentials.access-key");
-    private String secretKey = System.getProperty("cloud.aws.credentials.secret-key");
+    private String accessKey = System.getProperty("cloud.aws.s3.credentials.access-key");
+    private String secretKey = System.getProperty("cloud.aws.s3.credentials.secret-key");
     @Value("${cloud.aws.region.static}")
     private String region;
-
 
     @Bean
     public AmazonS3 getS3Client() {
@@ -26,3 +25,10 @@ public class AwsS3Config {
                 .withRegion(region).build();
     }
 }
+
+
+
+
+
+
+

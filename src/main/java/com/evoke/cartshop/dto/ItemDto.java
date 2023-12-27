@@ -17,4 +17,5 @@ public class ItemDto {
     private ItemStatus status;
     private boolean availability;
     private DiscountDto discount;
+    private UploadItemImageDto uploadItemImage;
 }

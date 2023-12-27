@@ -15,6 +15,7 @@ public interface ItemMapper {
     Item toEntity(ItemDto itemDto);
 
     @Mapping(target="discount.item",ignore = true)
+    @Mapping(target="uploadItemImage.item",ignore = true)
     ItemDto toDto(Item item);
 
     List<ItemDto> toDto(List<Item> itemList);

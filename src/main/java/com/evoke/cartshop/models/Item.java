@@ -40,4 +40,7 @@ public class Item {
 
     @OneToOne(mappedBy = "item",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Discount discount;
+
+    @OneToOne(mappedBy = "item",fetch = FetchType.EAGER)
+    private UploadItemImage uploadItemImage;
 }
