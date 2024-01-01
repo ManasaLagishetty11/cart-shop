@@ -126,6 +126,9 @@
                 </configuration>
             </plugin>
         </plugins>
+        <finalName>
+            spring-boot-cart-shop
+        </finalName>
     </build>
 
 </project>

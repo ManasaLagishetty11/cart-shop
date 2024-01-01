@@ -1,0 +1,11 @@
+version: '3'
+services:
+  cart-shop:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: manasa334/cart-shop-image:1.0
+    ports:
+      - "8081:8080"
+    env_file:
+      - docker.env
