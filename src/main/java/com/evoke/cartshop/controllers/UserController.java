@@ -60,6 +60,12 @@ public class UserController {
         userService.deleteUser(id);
 
     }
+    @DeleteMapping("/users/{id}")
+    public void deleteUserr(@PathVariable Long id){
+        userService.deleteUser(id);
+
+    }
+
 
 }
 
