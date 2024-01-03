@@ -35,8 +35,11 @@ public class ItemService {
     }
 
     public Item findById(Long id) {
-
-        return itemRepository.findById(id).get();
+        Optional<Item> item=itemRepository.findById(id);
+        if(!item.isPresent()){
+            throw new ResourceNotFoundException("item not available: "+id);
+        }
+        return item.get();
     }
 
     public void delete(Long id) {

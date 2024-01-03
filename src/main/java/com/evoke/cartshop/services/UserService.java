@@ -1,6 +1,5 @@
 package com.evoke.cartshop.services;
 
-import com.evoke.cartshop.dto.UserDto;
 import com.evoke.cartshop.exceptions.DuplicateAccountException;
 import com.evoke.cartshop.exceptions.ResourceNotFoundException;
 import com.evoke.cartshop.models.Role;
@@ -8,7 +7,6 @@ import com.evoke.cartshop.models.RoleEnum;
 import com.evoke.cartshop.models.User;
 import com.evoke.cartshop.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -34,7 +32,6 @@ public class UserService {
         }
         String encryptedPwd = passwordEncoder.encode(user.getPassword());
         user.setPassword(encryptedPwd);
-        // user.setRoles(Arrays.asList((new Role(RoleEnum.CUSTOMER)),(new Role(RoleEnum.ADMIN))));
         user.setRoles(Arrays.asList(new Role(RoleEnum.ADMIN)));
         emailService.sendMailtoUserForSuccessfulRegistration(user);
         return userRepository.save(user);

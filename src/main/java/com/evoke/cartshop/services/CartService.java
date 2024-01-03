@@ -1,6 +1,5 @@
 package com.evoke.cartshop.services;
 
-import com.evoke.cartshop.dto.CartDto;
 import com.evoke.cartshop.dto.CartItemsAndTotalCartValueDto;
 import com.evoke.cartshop.exceptions.ResourceNotFoundException;
 import com.evoke.cartshop.mappers.CartMapper;
